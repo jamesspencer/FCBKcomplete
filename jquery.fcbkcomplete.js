@@ -198,7 +198,7 @@ jQuery(function($){
                 var li = $(document.createElement("li"));
                 var input = $(document.createElement("input"));
                 var getBoxTimeout = 0;
-				
+
                 li.attr({
                     "class": "bit-input",
                     "id": elemid + "_annoninput"
@@ -435,6 +435,19 @@ jQuery(function($){
                     feed.hide();
                     browser_msie ? browser_msie_frame.hide() : '';
                     complete.hide();
+                    $('#tags_annoninput .maininput').focus();
+                });
+                
+                maininput.unbind("blur");
+                maininput.blur(function(event){
+                	if (options.newel) {
+                        var value = xssPrevent($(this).val());
+                        addItem(value, value);
+                        complete.hide();
+                        event.preventDefault();
+                        focuson = null;
+                        $('#tags_annoninput .maininput').focus();
+                    }
                 });
                 
                 maininput.unbind("keydown");
@@ -464,6 +477,7 @@ jQuery(function($){
                             complete.hide();
                             event.preventDefault();
                             focuson = null;
+                            $('#tags_annoninput .maininput').focus();
                         }
                         return false;
                     }
