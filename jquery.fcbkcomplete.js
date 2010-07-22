@@ -58,23 +58,24 @@
 /*
  * NOTE: should options be camelCased, underscored_, or concatenated lower case? All three conventions appear below: 
  * 
- * json_url         - url to fetch json object
- * cache       		- use cache
- * height           - maximum number of element shown before scroll will apear
- * newel            - show typed text like a element
- * firstselected	- automaticly select first element from dropdown
- * filter_case      - case sensitive filter
- * filter_selected  - filter selected items from list
- * complete_text    - text for complete page
- * maxshownitems	- maximum numbers that will be shown at dropdown list (less better performance)
- * onselect			- fire event on item select
- * onremove			- fire event on item remove
- * maxitimes		- maximum items that can be added
- * delay			- delay between ajax request (bigger delay, lower server time request)
- * onBlurAddTag     - boolean | default false, Adds any text remaining in the input box as a tag on blur
- * chooseOnEnter    - boolean | default true, Adds tag on enter key press
- * chooseOnTab		- boolean | default true, Adds tag on tab key press
- * chooseOnComma    - boolean | default true, Adds tag on comma key press
+ * json_url         		- url to fetch json object
+ * cache       				- use cache
+ * height           		- maximum number of element shown before scroll will apear
+ * newel            		- show typed text like a element
+ * firstselected			- automaticly select first element from dropdown
+ * filter_case      		- case sensitive filter
+ * filter_selected  		- filter selected items from list
+ * complete_text    		- text for complete page
+ * maxshownitems			- maximum numbers that will be shown at dropdown list (less better performance)
+ * onselect					- fire event on item select
+ * onremove					- fire event on item remove
+ * maxitimes				- maximum items that can be added
+ * delay					- delay between ajax request (bigger delay, lower server time request)
+ * keepPromptAfterChoose 	- boolean | default: true,  refocus the input box
+ * onBlurAddTag     		- boolean | default: false, Adds any text remaining in the input box as a tag on blur
+ * chooseOnEnter    		- boolean | default: true,  Adds tag on enter key press
+ * chooseOnTab				- boolean | default: true,  Adds tag on tab key press
+ * chooseOnComma    		- boolean | default: true,  Adds tag on comma key press
  */
 jQuery(function($){
     $.fn.fcbkcomplete = function(opt){
@@ -214,7 +215,7 @@ jQuery(function($){
                 var li = $(document.createElement("li"));
                 var input = $(document.createElement("input"));
                 var getBoxTimeout = 0;
-				
+
                 li.attr({
                     "class": "bit-input",
                     "id": elemid + "_annoninput"
@@ -482,6 +483,7 @@ jQuery(function($){
                     if (event.keyCode != 8) {
                         holder.children("li.bit-box.deleted").removeClass("deleted");
                     }
+
                     /* Triggers an "submit" event */
                     if ((event.keyCode == 13 && options.chooseOnEnter) || 
                     	(event.keyCode == 9 && options.chooseOnTab) || 
