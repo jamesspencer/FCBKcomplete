@@ -50,11 +50,14 @@
 - 2.7.5 added options "chooseOnEnter,chooseOnTab,chooseOnComma" to control what keys trigger selection
 		added option "keepPromptAfterChoose" to control if we stay selected/focused after choosing an option
 		added options "forceWidth" and "autoWidth" to control width setting (if both are null || false, no width is set in JS) 
-		
+
+- 2.7.6 added option "onBlurAddTag" this will add the text in the input box on leaving as a tag. 
  */
 /* Coded by: emposha <admin@emposha.com> */
 /* Copyright: Emposha.com <http://www.emposha.com/> - Distributed under MIT - Keep this message! */
 /*
+ * NOTE: should options be camelCased, underscored_, or concatenated lower case? All three conventions appear below: 
+ * 
  * json_url         - url to fetch json object
  * cache       		- use cache
  * height           - maximum number of element shown before scroll will apear
@@ -68,6 +71,10 @@
  * onremove			- fire event on item remove
  * maxitimes		- maximum items that can be added
  * delay			- delay between ajax request (bigger delay, lower server time request)
+ * onBlurAddTag     - boolean | default false, Adds any text remaining in the input box as a tag on blur
+ * chooseOnEnter    - boolean | default true, Adds tag on enter key press
+ * chooseOnTab		- boolean | default true, Adds tag on tab key press
+ * chooseOnComma    - boolean | default true, Adds tag on comma key press
  */
 jQuery(function($){
     $.fn.fcbkcomplete = function(opt){
@@ -444,7 +451,26 @@ jQuery(function($){
                     feed.hide();
                     browser_msie ? browser_msie_frame.hide() : '';
                     complete.hide();
+                    if (options.keepPromptAfterChoose) {
+						$('#tags_annoninput .maininput').focus();
+					}
                 });
+                
+                if(options.onBlurAddTag){
+                	maininput.unbind("blur");
+                	maininput.blur(function(){
+	                	if (options.newel) {
+							var value = xssPrevent($(this).val());
+							addItem(value, value);
+							complete.hide();
+							event.preventDefault();
+							focuson = null;
+						}
+						if (options.keepPromptAfterChoose) {
+							holder.trigger("click");
+						}
+                	});
+                }
                 
                 maininput.unbind("keydown");
                 maininput.keydown(function(event){
@@ -602,7 +628,8 @@ jQuery(function($){
 				chooseOnComma: true,
 				chooseOnTab: true,
 				chooseOnEnter: true,
-				keepPromptAfterChoose: true
+				keepPromptAfterChoose: true,
+				onBlurAddTag: false
             }, opt);
             
             //system variables
