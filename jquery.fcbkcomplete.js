@@ -248,7 +248,8 @@ jQuery(function($){
                 });
                 
                 input.keypress(function(event){
-                    if (event.keyCode == 13 || event.keyCode == 9) {
+                    if ((event.keyCode == 13 && options.chooseOnEnter) || 
+                        (event.keyCode == 9 && options.chooseOnTab)) {
                         return false;
                     }
                     //auto expand input							
