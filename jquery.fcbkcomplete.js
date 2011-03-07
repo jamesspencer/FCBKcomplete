@@ -55,6 +55,9 @@
 
 - 2.7.7 small patch to allow the use of non-(multi)select inputs
 
+- 2.7.8 ie6 fix to test for presence of a function rather than length
+
+
  */
 /* Coded by: emposha <admin@emposha.com> */
 /* Copyright: Emposha.com <http://www.emposha.com/> - Distributed under MIT - Keep this message! */
@@ -190,7 +193,7 @@ jQuery(function($){
                         _item.text(title);
                         element.is('select') && element.append(_item);
                     }
-                    if (options.onselect.length) {
+                    if (options.onselect) {
                         funCall(options.onselect, _item)
                     }
 					element.change();
