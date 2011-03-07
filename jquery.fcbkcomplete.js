@@ -52,6 +52,9 @@
 		added options "forceWidth" and "autoWidth" to control width setting (if both are null || false, no width is set in JS) 
 
 - 2.7.6 added option "onBlurAddTag" this will add the text in the input box on leaving as a tag. 
+
+- 2.7.7 small patch to allow the use of non-(multi)select inputs
+
  */
 /* Coded by: emposha <admin@emposha.com> */
 /* Copyright: Emposha.com <http://www.emposha.com/> - Distributed under MIT - Keep this message! */
@@ -185,7 +188,7 @@ jQuery(function($){
                         _item.attr("value", value).get(0).setAttribute("selected", "selected");
                         _item.attr("value", value).addClass("selected");
                         _item.text(title);
-                        element.append(_item);
+                        element.is('select') && element.append(_item);
                     }
                     if (options.onselect.length) {
                         funCall(options.onselect, _item)
